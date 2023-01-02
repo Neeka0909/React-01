@@ -1,0 +1,10 @@
+const router = require('express').Router();
+
+
+router.route('/test').post((req, res) => {
+    res.send("hi");
+});
+
+router.route('/some').get((req, res) => {
+    res.send("hi");
+});
