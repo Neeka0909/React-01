@@ -1,6 +1,11 @@
+//Site Css
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 
+//React
+import { useForm } from 'react-hook-form';
+
+//React-Bootstrap
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import Container from 'react-bootstrap/Container';
@@ -10,43 +15,94 @@ import Table from 'react-bootstrap/Table';
 
 
 function App() {
+  //Form Validation hook
+  const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", reValidateMode: "onSubmit" });
+
+  const formValidate = (data) => {
+    console.log(data);
+    let formData = {
+      runnerName: data.name,
+      runnerRadius: data.radius,
+      runnerStartTime: data.startTime,
+      runnerEndTime: data.endTime,
+      runnerlapCount: data.laps
+    }
+    console.log(formData);
+  }
+
   return (
     <Container>
       <Row>
         <Col>
-          <Form className="m-5">
-            <h1 className="mb-">Runners</h1>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form className="p-3" noValidate onSubmit={handleSubmit(formValidate)} >
+            <h1>Runners</h1>
+            <Form.Group className="mb-3" controlId="validationCustom01">
               <Form.Label>Runner Name</Form.Label>
-              <Form.Control type="text" placeholder="Enter circle Radius" />
+              <Form.Control
+                type="text"
+                placeholder="Enter Runner Name"
+                {...register("name", { required: "Please Enter a Runner Name." })}
+              />
+              {errors.name && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.name.message}
+                </Form.Control.Feedback>
+              )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="validationCustom01">
               <Form.Label>Radius (m)</Form.Label>
-              <Form.Control type="Text" placeholder="Enter Radius" />
-              <Form.Text className="text-muted">
-                Radius should be enterd in meters
-              </Form.Text>
+              <Form.Control
+                type="Text"
+                placeholder="Enter Radius"
+                {...register("radius", { required: "Please Enter a circle radius." })}
+              />
+              {errors.radius && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.radius.message}
+                </Form.Control.Feedback>
+              )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="validationCustom02">
               <Form.Label>Start Time(In hh:mm:ss format)</Form.Label>
-              <Form.Control type="number" placeholder="Enter Start Time " />
-              <Form.Text className="text-muted">
-                Start Time should be enterd in hh:mm:ss format
-              </Form.Text>
+              <Form.Control
+                type="time"
+                placeholder="Enter Start Time "
+                {...register("startTime", { required: "Please Enter a Start Time." })}
+              />
+              {errors.startTime && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.startTime.message}
+                </Form.Control.Feedback>
+              )}
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>End Time(In hh:mm:ss format)</Form.Label>
-              <Form.Control type="number" placeholder="Enter Start Time " />
-              <Form.Text className="text-muted">
-                End Time should be enterd in hh:mm:ss format
-              </Form.Text>
+            <Form.Group className="mb-3" controlId="validationCustom03">
+              <Form.Label>End Time(In hh:mm format)</Form.Label>
+              <Form.Control
+                type="time"
+                placeholder="Enter Start Time "
+                {...register("endTime", { required: "Please Enter a End Time." })}
+              />
+              {errors.endTime && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.endTime.message}
+                </Form.Control.Feedback>
+              )}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3" controlId="validationCustom04">
               <Form.Label>Number of laps</Form.Label>
-              <Form.Control type="number" placeholder="Enter Start Time " />
+              <Form.Control
+                type="number"
+                placeholder="Enter Start Time "
+                {...register("laps", { required: "Please Enter a Nunmer of Lap Counts." })}
+              />
+              {errors.laps && (
+                <Form.Control.Feedback type="invalid">
+                  {errors.laps.message}
+                </Form.Control.Feedback>
+              )}
             </Form.Group>
 
             <Button variant="primary" type="submit" className="justify-content-left">
@@ -57,9 +113,9 @@ function App() {
         </Col>
         <Col>
           <Row>
-            <Form className="mt-5">
+            <Form className="p-3">
               <h2>Runners</h2>
-              <Form.Group className="mb-3" >
+              <Form.Group className="mb-3" controlId="validationCustom01">
                 <Form.Label>Set Play Ground Radius</Form.Label>
                 <Form.Control type="number" placeholder="Enter Ground Radius" />
               </Form.Group>
@@ -70,7 +126,7 @@ function App() {
             </Form>
           </Row>
           <Row>
-            <Container className="mt-5">
+            <Container className="p-3">
               <h2>Report</h2>
               <Table striped bordered hover>
                 <thead>
@@ -119,4 +175,4 @@ function App() {
   );
 }
 
-export default App;
+export default App
