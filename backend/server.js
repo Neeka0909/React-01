@@ -3,12 +3,13 @@ const mysql = require('mysql')
 const cors = require('cors')
 
 const app = express();
-const port = process.env.PORT || 3500
+const port = process.env.PORT || 3500 
 
 //middleware
 app.use(express.json());
 app.use(cors());
 
+//initiate mysqli connection
 const conn = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -16,8 +17,8 @@ const conn = mysql.createConnection({
     database: "mydb"
 });
 
+// get reports from database (report route)
 app.get('/reports', (req, res) => {
-
     const selectQuery = "SELECT * FROM recode"
     conn.query(selectQuery, (err, result) => {
         if (err) {
@@ -26,11 +27,10 @@ app.get('/reports', (req, res) => {
         }
         res.send(result)
         console.log("Data recived successfully : " + result)
-
     })
 });
 
-// get reports from form
+// get reports from users (data post route)
 app.post('/data', (req, res) => {
     console.log(req.body)
 
@@ -64,9 +64,6 @@ app.post('/data', (req, res) => {
 
 })
 
-app.post('/radius', (req, res) => {
-    console.log(req.body)
-})
 
 
 app.listen(port, () => {

@@ -1,7 +1,6 @@
 //React
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-import { useEffect } from 'react'
+
 import axios from 'axios'
 
 //React-Bootstrap
@@ -14,9 +13,10 @@ import Col from 'react-bootstrap/Col'
 function RunnersForm() {
     //Form Validation hook
     const { register, setError, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", reValidateMode: "onSubmit" });
+    //max radius set to 15 meters
     const maxRadius = 15
 
-
+    //data validate function
     const formValidate = (data) => {
         let formData = {
             runnerName: data.name,
@@ -28,11 +28,11 @@ function RunnersForm() {
         let radius = data.radius
         if (radius > maxRadius) {
             console.log("Radius is greater than 15")
-            setError("radius", { message: "Runner radius should be less than " + maxRadius })
+            setError("radius", { message: "Runner radius should be less than " + maxRadius }) //maxradius validation
             return
         }
 
-
+        //data send to server
         const SendData = async () => {
             try {
                 const response = await axios.post('http://localhost:3500/data', formData)
@@ -47,15 +47,10 @@ function RunnersForm() {
         }
         SendData()
         console.log(formData)
-
     }
-    
- 
-
-
-
 
     return (
+        // Runners data input form
         <Col>
             <Form className="p-3" noValidate onSubmit={handleSubmit(formValidate)} >
                 <h1>Runners</h1>

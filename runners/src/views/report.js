@@ -11,6 +11,7 @@ const PI = 3.14
 
 function Report() {
 
+    //data append on report page
     const [recode, setrecode] = useState()
     useEffect(() => {
         axios.get("http://localhost:3500/reports")
@@ -52,8 +53,8 @@ function Report() {
 
     return (
         <Col>
-            <Row>
-                {/* <Form className="p-3">
+            {/* <Row>
+                <Form className="p-3">
                     <h2>Runners Ground </h2>
                     <Form.Group className="mb-3 p-1" controlId="validationCustom01">
                         <Form.Label>Set Play Ground Radius</Form.Label>
@@ -63,8 +64,9 @@ function Report() {
                     <Button variant="primary" type="submit" className="m-1">
                         Save
                     </Button>
-                </Form> */}
-            </Row>
+                </Form>
+            </Row> */}
+            {/* report table */}
             <Row>
                 <Container className="p-3">
                     <h2>Report</h2>
@@ -100,10 +102,6 @@ function Report() {
                                     )
                                 })
                             }
-
-
-
-
                         </tbody>
                     </Table>
                 </Container>
