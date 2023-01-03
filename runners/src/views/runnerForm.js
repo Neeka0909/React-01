@@ -12,7 +12,7 @@ import Col from 'react-bootstrap/Col'
 
 function RunnersForm() {
     //Form Validation hook
-    const { register, setError, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", reValidateMode: "onSubmit" });
+    const { register, setError, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", reValidateMode: "onTouched" });
     //max radius set to 15 meters
     const maxRadius = 15
 
@@ -30,6 +30,9 @@ function RunnersForm() {
             console.log("Radius is greater than 15")
             setError("radius", { message: "Runner radius should be less than " + maxRadius }) //maxradius validation
             return
+        }
+        if (data.laps < 0) {
+            setError("laps", { message: "Laps should be greater than 0" }) //laps validation
         }
 
         //data send to server
@@ -127,7 +130,7 @@ function RunnersForm() {
                         type="number"
                         placeholder="Enter Number of Laps "
                         min={1}
-                        {...register("laps", { required: "Please Enter a Nunmer of Lap Counts." })}
+                        {...register("laps", { required: "Please Enter a Nunbmer of Lap Counts." })}
                     />
                     {errors.laps && (
                         <Form.Text className="text-danger">
