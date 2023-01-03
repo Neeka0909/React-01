@@ -1,5 +1,6 @@
 //React
 import { useForm } from 'react-hook-form'
+import { useState } from 'react'
 import axios from 'axios'
 
 //React-Bootstrap
@@ -8,9 +9,12 @@ import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 
 
+
 function RunnersForm() {
     //Form Validation hook
-    const { register, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", reValidateMode: "onSubmit" });
+    const { register, setError, handleSubmit, formState: { errors } } = useForm({ mode: "onTouched", reValidateMode: "onSubmit" });
+    const maxRadius = 15
+
 
     const formValidate = (data) => {
         let formData = {
@@ -20,22 +24,11 @@ function RunnersForm() {
             runnerEndTime: data.endTime,
             runnerlapCount: data.laps
         }
-        //time validation
-        //calculate time difference in hh:mm:ss format
-        let time1 = data.startTime
-        let time2 = data.endTime
-        
-        const timeDiff = (time1, time2) => {
-            let time1Arr = time1.split(":")
-            let time2Arr = time2.split(":")
-            let time1Sec = parseInt(time1Arr[0]) * 3600 + parseInt(time1Arr[1]) * 60 + parseInt(time1Arr[2])
-            let time2Sec = parseInt(time2Arr[0]) * 3600 + parseInt(time2Arr[1]) * 60 + parseInt(time2Arr[2])
-            let timeDiff = time2Sec - time1Sec
-            let timeDiffHr = Math.floor(timeDiff / 3600)
-            let timeDiffMin = Math.floor((timeDiff - timeDiffHr * 3600) / 60)
-            let timeDiffSec = timeDiff - timeDiffHr * 3600 - timeDiffMin * 60
-            let timeDiffStr = timeDiffHr + ":" + timeDiffMin + ":" + timeDiffSec
-            return timeDiffStr
+        let radius = data.radius
+        if (radius > maxRadius) {
+            console.log("Radius is greater than 15")
+            setError("radius", { message: "Runner radius should be less than " + maxRadius })
+            return
         }
 
 
@@ -80,13 +73,20 @@ function RunnersForm() {
                     <Form.Control
                         type="number"
                         placeholder="Enter Radius"
+                        max={15}
+                        min={1}
+
                         {...register("radius", { required: "Please Enter a circle radius." })}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        Please select a radius grater than 15
+                    </Form.Control.Feedback>
                     {errors.radius && (
                         <Form.Text className="text-danger">
                             {errors.radius.message}
                         </Form.Text>
                     )}
+
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="validationCustom02">
@@ -111,6 +111,9 @@ function RunnersForm() {
                         step={1}
                         {...register("endTime", { required: "Please Enter a End Time." })}
                     />
+                    <Form.Control.Feedback type="invalid">
+                        Please Enter a valid End Time. your end time should be greater than your start time.
+                    </Form.Control.Feedback>
                     {errors.endTime && (
                         <Form.Text className="text-danger">
                             {errors.endTime.message}
@@ -123,6 +126,7 @@ function RunnersForm() {
                     <Form.Control
                         type="number"
                         placeholder="Enter Number of Laps "
+                        min={1}
                         {...register("laps", { required: "Please Enter a Nunmer of Lap Counts." })}
                     />
                     {errors.laps && (

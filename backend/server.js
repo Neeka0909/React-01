@@ -61,7 +61,6 @@ app.post('/data', (req, res) => {
         res.send("Data inserted successfully");
         console.log("Data inserted successfully")
     })
-    console.log("Conneection closed")
 
 })
 
