@@ -38,7 +38,7 @@ function RunnersForm() {
                 const response = await axios.post('http://localhost:3500/data', formData)
                 console.log(response)
                 alert("Runners Details Added Successfully")
-                //window.location.reload()
+                window.location.reload()
             } catch (error) {
                 console.log(error)
                 alert("Error Adding Runners Details")

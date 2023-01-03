@@ -25,9 +25,9 @@ function Report() {
     }, [])
 
     //hh:mm:ss time difference 
-    const timeDiffernce = (time1, time2) => {
-        var time1 = time1.split(":")
-        var time2 = time2.split(":")
+    const timeDiffernce = (timeReading1, timeReading2) => {
+        var time1 = timeReading1.split(":")
+        var time2 = timeReading2.split(":")
         var hour1 = parseInt(time1[0])
         var hour2 = parseInt(time2[0])
         var min1 = parseInt(time1[1])
@@ -74,12 +74,12 @@ function Report() {
                         <thead>
                             <tr>
                                 <th>Runner</th>
-                                <th>Speed</th>
+                                <th>Speed (kmph)</th>
                                 <th>Radius</th>
                                 <th>Start time</th>
                                 <th>End Time</th>
                                 <th>Durations</th>
-                                <th>number of Laps</th>
+                                <th>Number of Laps</th>
                             </tr>
                         </thead>
                         <tbody>

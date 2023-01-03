@@ -1,6 +1,5 @@
 //Site Css
 import "bootstrap/dist/css/bootstrap.min.css"
-import './App.css'
 
 
 //React-Bootstrap

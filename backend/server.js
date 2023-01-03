@@ -3,7 +3,7 @@ const mysql = require('mysql')
 const cors = require('cors')
 
 const app = express();
-const port = process.env.PORT || 3500 
+const port = process.env.PORT || 3500
 
 //middleware
 app.use(express.json());
@@ -26,17 +26,16 @@ app.get('/reports', (req, res) => {
             res.send("Error retrieving data")
         }
         res.send(result)
-        console.log("Data recived successfully : " + result)
     })
 });
 
 // get reports from users (data post route)
 app.post('/data', (req, res) => {
-    console.log(req.body)
-
+    //console.log(req.body)
     conn.connect((err) => {
         if (err) {
             //console.log(err)
+            console.log("Connection error")
         }
         console.log("Databse Connection established")
     })
@@ -50,13 +49,12 @@ app.post('/data', (req, res) => {
         req.body.runnerlapCount
     ]
 
-    console.log(jsondata)
+    //console.log(jsondata)
     const mySQLquery = "INSERT INTO `recode`(`name`, `radius`, `start_time`, `end_time`, `no_of_laps`) VALUES (?)"
     conn.query(mySQLquery, [jsondata], (err) => {
         if (err) {
             //console.log(err)
             res.send("Error inserting data")
-
         }
         res.send("Data inserted successfully");
         console.log("Data inserted successfully")
