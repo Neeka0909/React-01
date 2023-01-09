@@ -16,12 +16,10 @@ function Report() {
     useEffect(() => {
         axios.get("http://localhost:3500/reports")
             .then((res) => {
-                console.log(res.data)
+                //console.log(res.data)
                 setrecode(res.data)
             })
             .catch((err) => console.log(err))
-
-
     }, [])
 
     //hh:mm:ss time difference 
@@ -87,10 +85,10 @@ function Report() {
                                 Array.isArray(recode) && recode.map((item) => {
                                     var lenght = 2 * PI * item.radius * item.no_of_laps
                                     var timeDuration = timeDiffernce(item.start_time, item.end_time).toFixed(2)
-                                    var speed = (lenght / timeDuration).toFixed(2)
+                                    var speed = ((lenght / timeDuration) / 1000).toFixed(2)
 
                                     return (
-                                        <tr>
+                                        <tr key={item.id}>
                                             <td>{item.name}</td>
                                             <td>{speed}</td>
                                             <td>{item.radius}</td>
